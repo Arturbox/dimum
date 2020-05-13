@@ -44,6 +44,7 @@ return [
 
     'models' => [
         //'namespace' => 'App\\',
+        'namespace' => 'App\\Models\\',
     ],
 
     /*
@@ -112,7 +113,6 @@ return [
          */
         'locales' => [
             'am',
-            'en',
             //'pt',
         ],
     ],

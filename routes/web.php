@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+$namespacePrefix = '\\'.config('voyager.controllers.namespace').'\\';
 
+Route::get('e-admission', ['uses' => $namespacePrefix.'VoyagerFormController@form', 'as' => 'form']);
 
 Route::group(['prefix' => '/'], function () {
     Voyager::routes();

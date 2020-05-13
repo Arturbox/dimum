@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use TCG\Voyager\Facades\Voyager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Voyager::useModel('DataType', \App\Models\Voyager\DataType::class);
+        Voyager::useModel('DataRow', \App\Models\Voyager\DataRow::class);
+        Voyager::useModel('DataFilter', \App\Models\Voyager\DataFilter::class);
     }
 
     /**
