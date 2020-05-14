@@ -101,20 +101,22 @@ return [
         /*
          * Set whether or not the multilingual is supported by the BREAD input.
          */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * Select default language
          */
-        'default' => 'am',
+        'default' => 'hy',
 
         /*
          * Select languages that are supported.
          */
         'locales' => [
-            'am',
+            'hy',
+            'en'
             //'pt',
         ],
+        'field_types'=>[ 'text', 'varchar', 'longtext', 'ntext', 'nvarchar', 'nchar']
     ],
 
     /*
@@ -191,6 +193,7 @@ return [
 
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [
+        'css/style.css',
         //'css/custom.css',
     ],
 

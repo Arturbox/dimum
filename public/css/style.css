@@ -32,13 +32,13 @@
 #dataTable tbody tr td:first-child {
     text-align: center;
 }
-#dataTable #bread-actions a {
+#dataTable .bread-actions a {
     margin-top: 0;
     margin-bottom: 2px;
     margin-left: 5px;
 }
-#dataTable #bread-actions a span {
-    display: none;
+#dataTable .bread-actions a span {
+    display: none !important;
 }
 #dataTable > thead:first-child > tr:first-child > th {
     vertical-align: middle;

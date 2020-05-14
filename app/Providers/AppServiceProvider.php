@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../../resources/publishable/lang'), 'voyager');
     }
 }

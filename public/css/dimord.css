@@ -527,3 +527,10 @@ span.language-label{display: none}
 input.has-value:not([type='checkbox'])+label, input.has-value:not([type='radio'])+label{
     color: var(--main-color);
 }
+ul.radio li .check{top: 0 !important}
+ul.radio li label {margin: 0 auto 5px !important;}
+span.help-block{
+    display: block;
+    font-size: .8rem;
+    color: #fd6b6b;
+}
