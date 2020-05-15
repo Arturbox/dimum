@@ -534,3 +534,6 @@ span.help-block{
     font-size: .8rem;
     color: #fd6b6b;
 }
+@media screen and (max-width: 992px){
+    button.save{width: 75% !important}
+}

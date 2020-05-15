@@ -24,8 +24,13 @@ class VoyagerFormController extends BaseVoyagerBaseController
         $dataTypeContent = (strlen($dataType->model_name) != 0)
             ? new $dataType->model_name()
             : false;
+        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+        $model = app($dataType->model_name);
+        if (($isModelTranslatable = is_bread_translatable($model))) {
+            $dataTypeContent->load('translations');
+        }
         $dataFilters = Voyager::model('DataFilter')->where('data_type_parent_id', $dataType->id )->where('parent_id','=',null)->orderBy('order')->get();
-        return Voyager::view('vendor/voyager/form', compact('dataTypeRows','dataType','dataTypeContent','dataFilters'));
+        return Voyager::view('vendor/voyager/form', compact('dataTypeRows','dataType','dataTypeContent','dataFilters','isModelTranslatable'));
     }
 
     public function store(Request $request)

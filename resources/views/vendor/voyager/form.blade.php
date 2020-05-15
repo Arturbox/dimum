@@ -29,12 +29,17 @@
     <div class="card">
         <div class="card-header">
             <span>*** Խնդրում ենք ծանոթանալ կից ուղեցույցին և լրացնել ընդունելության հայտը</span>
-            <div class="language-selector float-right d-inline-block">
-                <div class="btn-group btn-group-sm" role="group" data-toggle="buttons">
-                    @foreach(config('voyager.multilingual.locales') as $lang)
-                        <label class="btn btn-primary{{ ($lang === config('voyager.multilingual.default')) ? " active" : "" }}">
-                            <input type="radio" name="i18n_selector" id="{{$lang}}" autocomplete="off"{{ ($lang === config('voyager.multilingual.default')) ? ' checked="checked"' : '' }}> {{ strtoupper($lang) }}
-                        </label>
+{{--            @dd(config('voyager.multilingual.locales'))--}}
+            <div class="dropdown show d-inline-block float-right">
+                <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ App::getLocale() }}
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    @foreach (config('voyager.multilingual.locales') as $language)
+                        @if ($language != App::getLocale())
+                            <a class="dropdown-item" href="{{ route('langroute', $language) }}" target="_self">{{ $language }}</a>
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -48,6 +53,19 @@
     <div class="card mb-3">
         <div class="card-body">
             <a href="javascript:void(0)" class="text-dark"><i class="far fa-file-word"></i> Դիմումի օրինակ – ներբեռնել </a>
+            @if (isset($isModelTranslatable) && $isModelTranslatable)
+
+                <div class="language-selector float-right d-inline-block">
+                    <span>Լրացման լեզուն</span>
+                    <div class="btn-group btn-group-sm" role="group" data-toggle="buttons">
+                        @foreach(config('voyager.multilingual.locales') as $lang)
+                            <label class="btn btn-primary{{ ($lang === config('voyager.multilingual.default')) ? " active" : "" }}">
+                                <input type="radio" name="i18n_selector" id="{{$lang}}" autocomplete="off"{{ ($lang === config('voyager.multilingual.default')) ? ' checked="checked"' : '' }}> {{ strtoupper($lang) }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
 
     </div>
@@ -411,6 +429,13 @@
 <script>
     $(document).ready(function (){
         $('.side-body').multilingual({"editing": true});
+    });
+    @if ($isModelTranslatable)
+    $('.side-body').multilingual({"editing": true});
+    @endif
+
+    $('.side-body input[data-slug-origin]').each(function(i, el) {
+        $(el).slugify();
     });
 
 </script>
