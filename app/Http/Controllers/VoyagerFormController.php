@@ -39,8 +39,8 @@ class VoyagerFormController extends BaseVoyagerBaseController
         $data = $request->all();
         $password = Str::random(12);
         $user = User::create([
-            'name' => $data['name_app'],
-            'email' => $data['mail_app'],
+            'name' => $request->input('name_app'),
+            'email' => $request->input('mail_app'),
             'password' => Hash::make($password),
             'role_id' => 3
         ]);

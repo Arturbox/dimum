@@ -537,3 +537,8 @@ span.help-block{
 @media screen and (max-width: 992px){
     button.save{width: 75% !important}
 }
+.divider{
+    height: 50px;
+    width: 100%;
+    background: var(--main-color);
+}

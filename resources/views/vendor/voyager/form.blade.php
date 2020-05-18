@@ -28,9 +28,10 @@
 
     <div class="card">
         <div class="card-header">
-            <span>*** Խնդրում ենք ծանոթանալ կից ուղեցույցին և լրացնել ընդունելության հայտը</span>
+            <span>Խնդրում ենք ծանոթանալ կից ուղեցույցին և լրացնել ընդունելության հայտը</span>
 {{--            @dd(config('voyager.multilingual.locales'))--}}
             <div class="dropdown show d-inline-block float-right">
+                <span>Էջի լեզուն</span>
                 <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ App::getLocale() }}
                 </a>
@@ -49,7 +50,7 @@
         </div>
 
     </div>
-    <h1 class="text-center">Դիմում հայտ</h1>
+    <h1 class="text-center">Դիմում-հայտ</h1>
     <div class="card mb-3">
         <div class="card-body">
             <a href="javascript:void(0)" class="text-dark"><i class="far fa-file-word"></i> Դիմումի օրինակ – ներբեռնել </a>
@@ -69,6 +70,7 @@
         </div>
 
     </div>
+    <p class="text-center">*-ով նշված բոլոր դաշտերը լրացման համար պարտադիր են</p>
     <form method="post" action="{{  route('voyager.'.$dataType->slug.'.store') }}" enctype="multipart/form-data" class="form-edit-add">
         @csrf
 
@@ -109,14 +111,17 @@
 
                                    value="{{ old($row->field, $dataTypeContent->{$row->field} ?? $options->default ?? '') }}">
                         @elseif($row->type == 'radio_btn')
-
+                            <label for="@if(isset($display_options->id)){{$display_options->id}}@endif" class="mb-1 ml-2">{{ $row->getTranslatedAttribute('display_name') }}</label>
                             @include('voyager::formfields.radio_btn', ['options' => $row->details])
-                            <label for="@if(isset($display_options->id)){{$display_options->id}}@endif" class="mb-0 ml-3">{{ $row->getTranslatedAttribute('display_name') }}</label>
+
                         @elseif($row->type == 'file')
                             <input @if($row->required == 1 && !isset($dataTypeContent->{$row->field}))  required @endif type="file" name="{{ $row->field }}[]" @if(isset($row->details->display->id)){{ "id=".$row->details->display->id }}@endif>
                         @elseif($row->type == 'select_dropdown')
                             <label for="@if(isset($display_options->id)){{$display_options->id}}@endif">{{ $row->getTranslatedAttribute('display_name') }}</label>
                             @include('voyager::formfields.select_dropdown', ['options' => $row->details])
+                        @elseif($row->type == 'checkbox')
+                            @include('voyager::formfields.checkbox', ['options' => $row->details])
+                            <label for="@if(isset($display_options->id)){{$display_options->id}}@endif"><a href="{{$display_options->url}}" target="_blank">{{ $row->getTranslatedAttribute('display_name') }}</a>
                         @elseif(isset($row->details->view))
                             @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => 'add'])
                         @elseif ($row->type == 'relationship')
@@ -168,7 +173,7 @@
                                 <span class="help-block">{{ $error }}</span>
                             @endforeach
                         @endif
-                        @if($row->type != 'radio_btn' && $row->type != 'relationship' && $row->type != 'select_dropdown')
+                        @if($row->type != 'radio_btn' && $row->type != 'relationship' && $row->type != 'select_dropdown' && $row->type != 'checkbox')
                             <label for="@if(isset($display_options->id)){{$display_options->id}}@endif">{{ $row->getTranslatedAttribute('display_name') }}</label>
                         @endif
 
@@ -341,7 +346,10 @@
                 $('.save').prop('disabled', false)
             }
         });
-
+        $('input[name=name_parent]').parent().parent().before('<div class="divider"></div>');
+        $('input#passport').parent().before('<div class="divider mb-3"></div>');
+        $('select[name=school_id]').parent().addClass('col-md-7 mx-auto').removeClass('col-md-6')
+        $('input#name').parent().addClass('col-md-12').removeClass('col-md-6')
         $('body').find('input:file').removeAttr('multiple').addClass('custom-file-input');
         $('body').find('input:file').next('label').addClass('custom-file-label');
         $('body').find('input:file').next().next('label').addClass('custom-file-label');
